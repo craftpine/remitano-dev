@@ -6,7 +6,10 @@
   "author": "hoangdai98 <hoangdai9895@gmail.com>",
   "license": "MIT",
   "devDependencies": {
+    "chai": "^4.3.6",
+    "chai-http": "^4.3.0",
     "concurrently": "^7.3.0",
+    "mocha": "^10.0.0",
     "nodemon": "^2.0.19"
   },
   "scripts": {
@@ -15,7 +18,8 @@
     "server": "nodemon server.js",
     "client": "yarn --cwd ./client start",
     "dev": "concurrently \"yarn server\" \"yarn client\"",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client",
+    "test": "mocha --timeout 10000000000"
   },
   "dependencies": {
     "axios": "^0.27.2",

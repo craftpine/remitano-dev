@@ -32,7 +32,7 @@ router.post(
         title: youtubeData.data.items[0].snippet.title,
         description: youtubeData.data.items[0].snippet.description,
       });
-      res.status(200).json({ response });
+      res.status(200).json({ response, success: true });
     } catch (error) {
       console.log(error);
       res.status(400).json(error);
