@@ -1,9 +1,9 @@
 process.env.NODE_ENV = "test";
 
-let chai = require("chai");
-let chaiHttp = require("chai-http");
-let server = require("../server");
-let should = chai.should();
+const chai = require("chai");
+const chaiHttp = require("chai-http");
+const server = require("../server");
+const should = chai.should();
 
 chai.use(chaiHttp);
 //Our parent block
@@ -31,7 +31,7 @@ describe("Shared Link Route", () => {
 
   describe("/POST youtube link without authentication", () => {
     it("it should send an error because user not logged in", (done) => {
-      let data = {
+      const data = {
         url: "https://www.youtube.com/watch?v=KqjgLbKZ1h0",
       };
       chai
@@ -40,7 +40,7 @@ describe("Shared Link Route", () => {
         .send(data)
         .end((err, res) => {
           res.should.have.status(401);
-
+          
           done();
         });
     });

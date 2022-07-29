@@ -53,7 +53,7 @@ router.post("/login", (req, res) => {
           }
         );
       } else {
-        return res.status(400).json({ errPassword: "Password incorrect" });
+        return res.status(400).json({ message: "Password incorrect" });
       }
     });
   });
