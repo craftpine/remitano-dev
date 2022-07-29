@@ -1,0 +1,28 @@
+{
+  "name": "remitano-dev",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:craftpine/remitano-dev.git",
+  "author": "hoangdai98 <hoangdai9895@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^7.3.0",
+    "nodemon": "^2.0.19"
+  },
+  "scripts": {
+    "client-install": "yarn --prefix client",
+    "dev:server": "node server.js",
+    "server": "nodemon server.js",
+    "client": "yarn --cwd ./client start",
+    "dev": "concurrently \"yarn server\" \"yarn client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.5.0",
+    "passport": "^0.6.0"
+  }
+}
