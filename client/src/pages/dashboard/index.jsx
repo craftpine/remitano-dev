@@ -4,7 +4,7 @@ import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
 import YouTube from "react-youtube";
 import "./index.css";
 
-function youtubeParser(url) {
+export function youtubeParser(url) {
   var regExp =
     /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
   var match = url.match(regExp);

@@ -40,11 +40,7 @@ describe("Shared Link Route", () => {
         .send(data)
         .end((err, res) => {
           res.should.have.status(401);
-          // res.body.should.be.a("object");
-          // res.body.should.have.property("success").eql(true);
-          // res.body.response.should.have.property("title");
-          // res.body.response.should.have.property("url").eql(data.url);
-          // res.body.response.should.have.property("description")
+
           done();
         });
     });
