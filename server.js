@@ -7,30 +7,14 @@ require("dotenv").config();
 const port = process.env.PORT || 4000;
 const cors = require("cors");
 
+const user = require("./routes/User");
+const sharedLink = require("./routes/SharedLink");
+
 const app = express();
-
-app.use(cors());
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "X-Requested-With");
-
-  next();
-});
-
-// set global vars
-app.use((req, res, next) => {
-  res.locals.user = req.user || null;
-  next();
-});
 
 // body parser middleaware
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
-// passport
-// app.use(passport.initialize());
-// app.use(passport.session());
 
 // connect DB
 mongoose
@@ -41,6 +25,32 @@ mongoose
 app.get("/", async (req, res) => {
   res.send("hello word");
 });
+
+// passport
+app.use(passport.initialize());
+app.use(passport.session());
+
+// passport config
+require("./config/passport")(passport);
+
+// set global vars
+app.use((req, res, next) => {
+  res.locals.user = req.user || null;
+  next();
+});
+
+app.use(cors());
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+
+  next();
+});
+
+// routes
+app.use("/api/user", user);
+app.use("/api/link", sharedLink);
 
 // server static asts if in production
 if (process.env.NODE_ENV == "production") {
