@@ -10,11 +10,13 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 if (localStorage.getItem("token")) {
-  setAuthToken(localStorage.getItem("token"));
   const decoded = jwt_decode(localStorage.getItem("token"));
   const currentTime = Date.now() / 1000;
   if (decoded.exp < currentTime) {
+    localStorage.clear();
     window.location.href = "/";
+  } else {
+    setAuthToken(localStorage.getItem("token"));
   }
 }
 
@@ -25,15 +27,18 @@ export const AuthContext = createContext({
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
-  const [usernameLoggedIn, setUsernameLoggedIn] = useState("")
+  const [usernameLoggedIn, setUsernameLoggedIn] = useState("");
 
-  const value = useMemo(() => ({ loggedIn, setLoggedIn, usernameLoggedIn, setUsernameLoggedIn }), [loggedIn, usernameLoggedIn]);
+  const value = useMemo(
+    () => ({ loggedIn, setLoggedIn, usernameLoggedIn, setUsernameLoggedIn }),
+    [loggedIn, usernameLoggedIn]
+  );
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       const decoded = jwt_decode(localStorage.getItem("token"));
       const currentTime = Date.now() / 1000;
-      setUsernameLoggedIn(decoded?.username ?? "")
+      setUsernameLoggedIn(decoded?.username ?? "");
       setLoggedIn(decoded.exp > currentTime);
     }
   }, []);

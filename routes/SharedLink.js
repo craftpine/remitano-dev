@@ -5,7 +5,7 @@ const SharedLink = require("../models/SharedLink");
 
 const axios = require("axios");
 
-const youtubeApiKey = "AIzaSyDDS1Xpv7O2R8NI-KqAYrOx4eUHNrQZtaM";
+const youtubeApiKey = process.env.YOUTUBE_API_KEY;
 
 function youtubeParser(url) {
   var regExp =
