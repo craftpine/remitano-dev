@@ -10,6 +10,14 @@ const SharedLinkSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "user",
   },
+  title: {
+    type: String,
+    default: "",
+  },
+  description: {
+    type: String,
+    default: "",
+  },
 });
 
 module.exports = SharedLink = mongoose.model("sharedLink", SharedLinkSchema);

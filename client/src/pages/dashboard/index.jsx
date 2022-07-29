@@ -1,8 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { Card, CardBody, CardSubtitle, CardText, CardTitle } from "reactstrap";
-
+import YouTube from "react-youtube";
 import "./index.css";
+
+function youtubeParser(url) {
+  var regExp =
+    /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+  var match = url.match(regExp);
+  return match && match[7].length == 11 ? match[7] : false;
+}
 
 export default function Dashboard() {
   const [data, setData] = useState([]);
@@ -17,19 +24,25 @@ export default function Dashboard() {
     }
   };
 
+  const renderYoutubeView = (url) => {
+    return (
+      <YouTube
+        videoId={youtubeParser(url)} // defaults -> ''
+        opts={{ height: "390", width: "540" }}
+      />
+    );
+  };
+
   useEffect(() => {
     getYoutubeLink();
   }, []);
 
-  
   return (
     <>
       {data.map((e) => (
         <Card className="d-flex flex-row mb-3" key={e._id}>
           {/* {getYouTubeTitle(e.url)} */}
-          <div>
-            <img alt="Card image" src="https://picsum.photos/300/200" />
-          </div>
+          <div>{renderYoutubeView(e.url)}</div>
           <CardBody>
             <CardTitle tag="h5">
               <a href={e.url} target="_blank" rel="noreferrer">
