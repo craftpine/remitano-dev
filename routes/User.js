@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 
 // Register ==================================
 router.post("/register", (req, res) => {
-  User.findOne({ email: req.body.username }).then((user) => {
+  User.findOne({ username: req.body.username }).then((user) => {
     if (user) {
       return res.status(400).json({ message: "Username already exists !!" });
     } else {
@@ -30,12 +30,12 @@ router.post("/register", (req, res) => {
 
 // Login =========================
 router.post("/login", (req, res) => {
-  const email = req.body.email;
+  const username = req.body.username;
   const password = req.body.password;
 
-  User.findOne({ email }).then((user) => {
+  User.findOne({ username }).then((user) => {
     if (!user) {
-      return res.status(400).json({ errUser: "User not found!!!" });
+      return res.status(400).json({ message: "User not found!!!" });
     }
     bcrypt.compare(password, user.password).then((match) => {
       if (match) {

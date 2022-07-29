@@ -10,7 +10,8 @@ import { AuthContext } from "../../App";
 import { toast } from "react-toastify";
 
 export default function Header() {
-  const { loggedIn, setLoggedIn } = useContext(AuthContext);
+  const { loggedIn, setLoggedIn, usernameLoggedIn, setUsernameLoggedIn } =
+    useContext(AuthContext);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
@@ -25,12 +26,12 @@ export default function Header() {
         localStorage.setItem("token", token);
         setAuthToken(token);
         setLoggedIn(true);
+        setUsernameLoggedIn(username);
       }
       toast.success("You are successfully logged in");
     } catch (error) {
       console.log(error);
-      toast.success(error.message);
-
+      toast.error(error.response.data.message);
     }
   };
 
@@ -50,8 +51,7 @@ export default function Header() {
       toast.success("You are successfully register");
     } catch (error) {
       console.log(error);
-      toast.success(error.message);
-
+      toast.error(error.response.data.message);
     }
   };
 
@@ -82,8 +82,12 @@ export default function Header() {
   const renderLoggedIn = () => {
     return (
       <div className="d-flex gx-5 align-items-center">
-        <div>Welcome aaa@gmail.com</div>
-        <Link to="/create-link">Share a movie</Link>
+        <div className="me-2">
+          Welcome <span className="fw-bold">{usernameLoggedIn}</span>
+        </div>
+        <Button color="primary">
+          <Link to="/create-link" className="text-decoration-none text-white">Share a movie</Link>
+        </Button>
         <Button className="ms-2" color="secondary" onClick={handleLogout}>
           Logout
         </Button>

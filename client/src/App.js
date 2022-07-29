@@ -25,13 +25,15 @@ export const AuthContext = createContext({
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [usernameLoggedIn, setUsernameLoggedIn] = useState("")
 
-  const value = useMemo(() => ({ loggedIn, setLoggedIn }), [loggedIn]);
+  const value = useMemo(() => ({ loggedIn, setLoggedIn, usernameLoggedIn, setUsernameLoggedIn }), [loggedIn, usernameLoggedIn]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       const decoded = jwt_decode(localStorage.getItem("token"));
       const currentTime = Date.now() / 1000;
+      setUsernameLoggedIn(decoded?.username ?? "")
       setLoggedIn(decoded.exp > currentTime);
     }
   }, []);

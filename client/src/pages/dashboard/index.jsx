@@ -39,25 +39,29 @@ export default function Dashboard() {
 
   return (
     <>
-      {data.map((e) => (
-        <Card className="d-flex flex-row mb-3" key={e._id}>
-          {/* {getYouTubeTitle(e.url)} */}
-          <div>{renderYoutubeView(e.url)}</div>
-          <CardBody>
-            <CardTitle tag="h5">
-              <a href={e.url} target="_blank" rel="noreferrer">
-                {e?.title}
-              </a>
-            </CardTitle>
-            <CardSubtitle className="mb-2 text-muted" tag="h6">
-              <div>Shared by: {e?.createdBy?.username}</div>
-            </CardSubtitle>
-            <CardText className="text-truncate-text">
-              <div>Description: {e?.description}</div>
-            </CardText>
-          </CardBody>
-        </Card>
-      ))}
+      {data?.length === 0 ? (
+        <div className="text-center">No data</div>
+      ) : (
+        data.map((e) => (
+          <Card className="d-flex flex-row mb-3" key={e._id}>
+            {/* {getYouTubeTitle(e.url)} */}
+            <div>{renderYoutubeView(e.url)}</div>
+            <CardBody>
+              <CardTitle tag="h5">
+                <a href={e.url} target="_blank" rel="noreferrer">
+                  {e?.title}
+                </a>
+              </CardTitle>
+              <CardSubtitle className="mb-2 text-muted" tag="h6">
+                <div>Shared by: {e?.createdBy?.username}</div>
+              </CardSubtitle>
+              <CardText className="text-truncate-text">
+                <div>Description: {e?.description}</div>
+              </CardText>
+            </CardBody>
+          </Card>
+        ))
+      )}
     </>
   );
 }
