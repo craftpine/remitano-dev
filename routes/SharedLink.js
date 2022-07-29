@@ -20,4 +20,20 @@ router.post(
   }
 );
 
+router.get(
+    "/",
+    async (req, res) => {
+      try {
+        const response = await SharedLink.find().populate({
+            path: 'createdBy',
+            model: "user",
+            select: "username"
+        });
+        res.status(200).json({ response });
+      } catch (error) {
+        res.status(400).json(error);
+      }
+    }
+  );
+
 module.exports = router;

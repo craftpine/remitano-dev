@@ -7,14 +7,12 @@ const bcrypt = require("bcryptjs");
 
 // Register ==================================
 router.post("/register", (req, res) => {
-  User.findOne({ email: req.body.email }).then((user) => {
+  User.findOne({ email: req.body.username }).then((user) => {
     if (user) {
-      return res.status(400).json({ errEmail: "Email already exists !!" });
+      return res.status(400).json({ message: "Username already exists !!" });
     } else {
       const newUser = new User({
-        name: req.body.name,
-        email: req.body.email,
-        password: req.body.password,
+        ...req.body,
       });
       bcrypt.genSalt(10, (err, salt) => {
         bcrypt.hash(newUser.password, salt, (err, hash) => {
@@ -43,9 +41,7 @@ router.post("/login", (req, res) => {
       if (match) {
         const payload = {
           id: user.id,
-          name: user.name,
-          role: user.role,
-          email: user.email,
+          username: user.username,
         };
         jwt.sign(
           payload,
