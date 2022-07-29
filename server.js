@@ -22,10 +22,6 @@ mongoose
   .then(() => console.log("Mongodb connected !!!"))
   .catch((err) => console.log(err));
 
-app.get("/", async (req, res) => {
-  res.send("hello word");
-});
-
 // passport
 app.use(passport.initialize());
 app.use(passport.session());
